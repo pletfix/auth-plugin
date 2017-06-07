@@ -1,0 +1,19 @@
+{
+    "name": "pletfix/registration",
+    "description": "Registration Form Plugin for Pletfix",
+    "authors": [
+        {
+            "name": "Frank Rohlfing",
+            "email": "mail@pletfix.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "php": ">=5.6.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Pletfix\\Registration\\": "src/"
+        }
+    }
+}
