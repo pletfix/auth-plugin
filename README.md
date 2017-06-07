@@ -35,7 +35,17 @@ You can override  or modify the route entries in the application's route file `.
 Enter the following URL into your Browser to open the user management:
 
     https://<your-application>/auth/register
-        
+
+---
+   
 ![Screenshot1](https://raw.githubusercontent.com/pletfix/registration/master/screenshot1.png)
+
+---
+
 ![Screenshot2](https://raw.githubusercontent.com/pletfix/registration/master/screenshot2.png)
+
+---
+
 ![Screenshot3](https://raw.githubusercontent.com/pletfix/registration/master/screenshot3.png)
+
+---
