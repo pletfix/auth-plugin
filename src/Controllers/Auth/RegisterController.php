@@ -1,6 +1,6 @@
 <?php
 
-namespace Pletfix\UserManager\Controllers\Auth;
+namespace Pletfix\Authentication\Controllers\Auth;
 
 use App\Controllers\Controller;
 use App\Models\User;
@@ -69,11 +69,11 @@ class RegisterController extends Controller
 
         // Create the user account.
 
-        $user = $this->create($input);
+        $user = $this->createUser($input);
 
-        // Login the user (without role yet)
+        // Login the user into the application (without role yet).
 
-        auth()->login($input);
+        auth()->setPrincipal($user->id, $user->name, $user->role);
 
         // Send a mail to verify the email address.
 
@@ -88,7 +88,7 @@ class RegisterController extends Controller
      * @param array $data
      * @return User
      */
-    protected function create(array $data)
+    protected function createUser(array $data)
     {
         $user = new User;
 

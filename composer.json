@@ -1,6 +1,6 @@
 {
-    "name": "pletfix/registration",
-    "description": "Registration Form Plugin for Pletfix",
+    "name": "pletfix/authentication",
+    "description": "Authentication Plugin for Pletfix",
     "authors": [
         {
             "name": "Frank Rohlfing",
@@ -13,7 +13,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Pletfix\\Registration\\": "src/"
+            "Pletfix\\Authentication\\": "src/"
         }
     }
 }
