@@ -7,7 +7,7 @@
 		<div class="col-md-6 col-md-offset-3">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					Registrierung
+					Registration
 				</div>
 				<div class="panel-body">
 					@include('_errors')
@@ -68,7 +68,7 @@
 						<div class="form-group">
 							<div class="col-md-8 col-md-offset-4">
 								<button type="submit" class="btn btn-primary">
-									<i class="fa fa-btn fa-user"></i> Registrieren
+									<i class="fa fa-btn fa-user"></i> Register
 								</button>
 							</div>
 						</div>

@@ -61,14 +61,14 @@ Enter the following URL into your Browser to open the registration form:
 
     https://<your-application>/auth/register
 
-![Screenshot1](https://raw.githubusercontent.com/pletfix/registration/master/screenshot1.png)
+![Registration Form](https://raw.githubusercontent.com/pletfix/registration/master/docs/screenshot1.png)
 
 After the user submitted the form, a new entity is saved into the user model (with a "guest" role) so that the user is 
 log in into the application immediately (but only as a guest). 
 
 A mail is sent to the email address the user has entered.  
 
-![Screenshot3](https://raw.githubusercontent.com/pletfix/registration/master/screenshot3.png)
+![Registration Mail](https://raw.githubusercontent.com/pletfix/registration/master/docs/screenshot2.png)
 
 WHile the user is logged in, he may resend the mail by entering this URL:
 
@@ -76,13 +76,15 @@ WHile the user is logged in, he may resend the mail by entering this URL:
 
 If the user confirms the email, their role is updated to "user" and a confirmation message is printed: 
  
-![Screenshot3](https://raw.githubusercontent.com/pletfix/registration/master/screenshot3.png)
+![Confirm Registration](https://raw.githubusercontent.com/pletfix/registration/master/docs/screenshot3.png)
  
 ### Login and Logout
 
 The URLs to login into the application is this: 
 
     https://<your-application>/auth/login
+    
+![Login](https://raw.githubusercontent.com/pletfix/registration/master/docs/screenshot4.png)    
 
 If the user ticks "remember-me", a long life (5 years) cookie is created on the browser. If the PHP session expires 
 (because has close the browser and opens it later for example), the User will be re-login automaticaly.
@@ -99,14 +101,21 @@ To reset the password, two forms are needed. Enter this to start the reset proce
 
     https://<your-application>/auth/reset
 
+![Forgot Password](https://raw.githubusercontent.com/pletfix/registration/master/docs/screenshot5.png)    
+
 After submit a random token is saved into the `password_resets` database table and a mail is send to this email address.
+
+![Reset Password Mail](https://raw.githubusercontent.com/pletfix/registration/master/docs/screenshot6.png)   
 
 If the user confirms the email, the token will be matched and the second form to receive the new password is opened:
 
-### Chnage Password
+![Reset Password](https://raw.githubusercontent.com/pletfix/registration/master/docs/screenshot7.png)   
+
+### Change Password
 
 The user may change their password quickly if already log in: 
 
     https://<your-application>/auth/reset
 
+![Change Password](https://raw.githubusercontent.com/pletfix/registration/master/docs/screenshot8.png)   
 
