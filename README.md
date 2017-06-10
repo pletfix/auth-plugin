@@ -70,7 +70,7 @@ A mail is sent to the email address the user has entered.
 
 ![Registration Mail](https://raw.githubusercontent.com/pletfix/registration/master/docs/screenshot2.png)
 
-WHile the user is logged in, he may resend the mail by entering this URL:
+While the user is logged in, he may resend the mail by entering this URL:
 
     https://<your-application>/auth/register/resend
 
