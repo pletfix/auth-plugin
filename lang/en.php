@@ -11,7 +11,7 @@ return [
     |
     */
 
-    'init'          => 'The game will be initialized.',
+    'index_title'   => 'User Accounts',
     'over'          => 'The game is over.',
     'begin'         => 'A new match is started.',
     'end'           => 'The current match was stopped.',

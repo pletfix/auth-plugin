@@ -1,7 +1,7 @@
 @extends('app')
 
 @section('content')
-    <h2>Benutzer-Accounts</h2>
+    <h2>{{t('authentication.index_title')}}</h2>
     <div class ="row">
         <div class="col-xs-8 col-sm-6">
             @include('_search')

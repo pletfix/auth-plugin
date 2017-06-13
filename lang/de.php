@@ -11,7 +11,7 @@ return [
     |
     */
 
-    'init'          => 'Das Spiel wird initialisiert.',
+    'index_title'   => 'Benutzer-Accounts',
     'over'          => 'Das Spiel ist vorbei.',
     'begin'         => 'Eine neue Spielrunde beginnt.',
     'end'           => 'Die aktuelle Spielrunde wurde beendet.',
