@@ -26,3 +26,10 @@ $route->middleware('Auth', function(Route $route) {
     $route->get('auth/password',      'Auth\PasswordController@showForm');
     $route->post('auth/password',     'Auth\PasswordController@change');
 });
+
+// User Management Routes
+$route->middleware('Ability:manage-user', function(Route $route) {
+    $route->get('admin/users/{user}/replicate', 'Admin\UserController@replicate');
+    $route->get('admin/users/{user}/confirm',   'Admin\UserController@confirm');
+    $route->resource('admin/users',             'Admin\UserController');
+});
