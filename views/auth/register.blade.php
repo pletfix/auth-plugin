@@ -21,7 +21,7 @@
 								<input id="name" name="name" value="{{old('name')}}" type="text" class="form-control" required="required" autofocus="autofocus"/>
 								@if(error('name'))
 									<span class="help-block">
-                                        <strong>{{ error('name') }}</strong>
+                                        <strong>{{error('name')}}</strong>
                                     </span>
 								@endif
 							</div>

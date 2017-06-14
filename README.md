@@ -20,22 +20,42 @@ After downloading, enter this command in your terminal to register the plugin:
 
     php console plugin pletfix/authentication 
     
+Execute the `migrate` command to create a `password_resets`database table:
+ 
+    php console migrate
+        
 ## Customize
     
+### View    
+
 If you would like to modified the views of the plugin, copy them to the application's view directory, where you can edit 
 the views as you wish:
      
     cp -R ./vendor/pletfix/authentication/views/* ./resources/views/
  
-Add the `manage-user`ability to the Access Control List in `config/auth.php` to controle the access to the 
+To add suitable menu items you should read the layout example that you can find in the plugin's stubs folder. 
+The layout includes the following partials:
+
+    @include('_username')
+
+    @include('_login')
+
+The `_username` partial prints the username of the current user and `_login` renders the menu items for login, logout, 
+register and so on.
+
+### Abilities
+ 
+Add the `manage-user`ability to the Access Control List in `config/auth.php` to control the access to the 
 user management frontend: 
     
     'acl' => [
         //...        
         'manage-user' => ['admin'],
     ],
+
+### Routes
    
-If you don't use the `manage-user`ability, or if you like to use an another root path, have a look in the plugin's 
+If you don't use the `manage-user`ability, or if you like to use an another route path, have a look in the plugin's 
 route entries in `./vendor/pletfix/authentication/config/routes.php`. 
 You can override or modify the route entries in the application's route file `./config/boot/routes.php` like you wish:
 

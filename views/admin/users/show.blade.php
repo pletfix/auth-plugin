@@ -5,7 +5,7 @@
         <div class="col-md-6 col-md-offset-3">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h2 class="panel-title">{{ $user->name }}'s Benutzerprofil</h2>
+                    <h2 class="panel-title">{{$user->name}}'s Benutzerprofil</h2>
                 </div>
                 <div class="panel-body">
                     <div class="row">
@@ -13,7 +13,7 @@
                             ID
                         </div>
                         <div class="col-xs-12 col-sm-9">
-                            {{ $user->id }}
+                            {{$user->id}}
                         </div>
                     </div>
                     <div class="row">
@@ -21,7 +21,7 @@
                             Benutzername
                         </div>
                         <div class="col-xs-12 col-sm-9">
-                            {{ $user->name }}
+                            {{$user->name}}
                         </div>
                     </div>
                     <div class="row">
@@ -29,7 +29,7 @@
                             E-Mail-Adresse
                         </div>
                         <div class="col-xs-12 col-sm-9">
-                            {{ $user->email }}
+                            {{$user->email}}
                             <br/>
                             @if($user->confirmed)
                                 <span class="glyphicon glyphicon-ok" style="color:green" aria-hidden="true" title="Verfifiziert"></span>
@@ -44,7 +44,7 @@
                             Benutzerrolle
                         </div>
                         <div class="col-xs-12 col-sm-9">
-                            {{ $user->role }}
+                            {{$user->role}}
                         </div>
                     </div>
                     <hr/>
@@ -53,7 +53,7 @@
                             {{--Angelegt--}}
                         {{--</div>--}}
                         {{--<div class="col-xs-12 col-sm-8">--}}
-                            {{--{{ format_datetime($user->created_at) }}--}}
+                            {{--{{format_datetime($user->created_at)}}--}}
                         {{--</div>--}}
                     {{--</div>--}}
                     {{--<div class="row">--}}
@@ -61,7 +61,7 @@
                             {{--Bearbeitet--}}
                         {{--</div>--}}
                         {{--<div class="col-xs-12 col-sm-8">--}}
-                            {{--{{ format_datetime($user->updated_at) }}--}}
+                            {{--{{format_datetime($user->updated_at)}}--}}
                         {{--</div>--}}
                     {{--</div>--}}
                     {{--<br/>--}}
