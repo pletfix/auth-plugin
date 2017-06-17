@@ -33,13 +33,17 @@ the views as you wish:
      
     cp -R ./vendor/pletfix/authentication/views/* ./resources/views/
  
-To add suitable menu items you should read the layout example that you can find in the plugin's stubs folder. 
-The layout includes the following partials:
-
-    @include('_username')
-
-    @include('_login')
-
+For example, if you have installed the [Pletfix Application Skeleton](https://github.com/pletfix/app), you could add the 
+suitable menu items by by adding the following partials in your `resources/views/app.blade.php` layout:
+ 
+- Copy just above the marker `{{--left_menu_point--}}` this line: 
+    
+       @include('_username')
+    
+- Copy just above the marker `{{--right_menu_point--}}` this line: 
+    
+       @include('_login')
+    
 The `_username` partial prints the username of the current user and `_login` renders the menu items for login, logout, 
 register and so on.
 
