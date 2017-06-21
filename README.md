@@ -36,11 +36,11 @@ the views as you wish:
 For example, if you have installed the [Pletfix Application Skeleton](https://github.com/pletfix/app), you could add the 
 suitable menu items by by adding the following partials in your `resources/views/app.blade.php` layout:
  
-- Copy just above the marker `{{--left_menu_point--}}` this line: 
+- Copy this line just above the marker `{{--left_menu_point--}}`: 
     
        @include('_username')
     
-- Copy just above the marker `{{--right_menu_point--}}` this line: 
+- Copy this line just above the marker `{{--right_menu_point--}}`: 
     
        @include('_login')
     
