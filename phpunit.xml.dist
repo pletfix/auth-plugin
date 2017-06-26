@@ -13,10 +13,18 @@
          convertNoticesToExceptions="true"
          convertWarningsToExceptions="true">
     <testsuites>
-        <testsuite name="Pletfix Plugin Test Suite">
+        <testsuite name="Authentication Plugin Test Suite">
             <directory suffix="Test.php">./tests</directory>
         </testsuite>
     </testsuites>
+    <filter>
+        <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">./src</directory>
+        </whitelist>
+    </filter>
+    <logging>
+        <log type="coverage-html" target="../../../storage/temp/coverage" />
+    </logging>
     <php>
         <env name="APP_ENV" value="testing"/>
     </php>
