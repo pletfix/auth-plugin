@@ -93,7 +93,7 @@ class UserController
         $user = User::find($id);
 
         if ($user === null) {
-            abort(HTTP_STATUS_BAD_REQUEST, 'User #' . $id . ' not found!');
+            abort(Response::HTTP_BAD_REQUEST, 'User #' . $id . ' not found!');
         }
 
         $user->delete(); // todo Was machen wenn es nicht klappt?
@@ -114,7 +114,7 @@ class UserController
         $user = User::find($id);
 
         if ($user === null) {
-            abort(HTTP_STATUS_BAD_REQUEST, 'User #' . $id . ' not found!');
+            abort(Response::HTTP_BAD_REQUEST, 'User #' . $id . ' not found!');
         }
 
         return view('admin.users.form', ['user' => $user]);
@@ -131,7 +131,7 @@ class UserController
         $user = User::find($id);
 
         if ($user === null) {
-            abort(HTTP_STATUS_BAD_REQUEST, 'User #' . $id . ' not found!');
+            abort(Response::HTTP_BAD_REQUEST, 'User #' . $id . ' not found!');
         }
 
         $user = $user->replicate();
@@ -150,7 +150,7 @@ class UserController
         $user = User::find($id);
 
         if ($user === null) {
-            abort(HTTP_STATUS_BAD_REQUEST, 'User #' . $id . ' not found!');
+            abort(Response::HTTP_BAD_REQUEST, 'User #' . $id . ' not found!');
         }
 
         $input = request()->input();
@@ -195,7 +195,7 @@ class UserController
         $user = User::find($id);
 
         if ($user === null) {
-            abort(HTTP_STATUS_BAD_REQUEST, 'User #' . $id . ' not found!');
+            abort(Response::HTTP_BAD_REQUEST, 'User #' . $id . ' not found!');
         }
 
         return view('admin.users.show', compact('user'));
@@ -212,7 +212,7 @@ class UserController
         $user = User::find($id);
 
         if ($user === null) {
-            abort(HTTP_STATUS_BAD_REQUEST, 'User #' . $id . ' not found!');
+            abort(Response::HTTP_BAD_REQUEST, 'User #' . $id . ' not found!');
         }
 
         $user->confirmation_token = null;

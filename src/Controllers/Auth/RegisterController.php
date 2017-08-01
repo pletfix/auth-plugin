@@ -52,7 +52,7 @@ class RegisterController extends Controller
 //        }
 
         $email = $input['email'];
-        $user = User::whereIs('email', $email)->first();
+        $user = User::where('email', $email)->first();
         if ($user !== null) {
             return redirect('auth/register', [], [
                 'errors.email' => 'Diese E-Mail-Adresse ist bereits registriert.',
@@ -127,12 +127,12 @@ class RegisterController extends Controller
 
         $email = request()->input('email');
         if ($email === null) {
-            abort(HTTP_STATUS_BAD_REQUEST);
+            abort(Response::HTTP_BAD_REQUEST);
         }
 
-        $user = User::whereIs('email', $email)->whereIs('confirmation_token', $confirmationToken)->first();
+        $user = User::where('email', $email)->where('confirmation_token', $confirmationToken)->first();
         if ($user === null) {
-            abort(HTTP_STATUS_FORBIDDEN, 'Token is invalid.');
+            abort(Response::HTTP_FORBIDDEN, 'Token is invalid.');
         }
 
         // Update the user role from "guest" to "user".
@@ -157,7 +157,7 @@ class RegisterController extends Controller
     {
         $user = User::find(auth()->id());
         if ($user === null) {
-            abort(HTTP_STATUS_FORBIDDEN);
+            abort(Response::HTTP_FORBIDDEN);
         }
 
         if (empty($user->confirmation_token)) {

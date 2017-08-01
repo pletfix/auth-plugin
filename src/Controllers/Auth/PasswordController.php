@@ -44,7 +44,7 @@ class PasswordController extends Controller
     {
         $user = User::find(auth()->id());
         if ($user === null) {
-            abort(HTTP_STATUS_FORBIDDEN);
+            abort(Response::HTTP_FORBIDDEN);
         }
 
         $input = request()->input();

@@ -58,7 +58,7 @@ class ResetController extends Controller
         }
 
         $email = $input['email'];
-        $user = User::whereIs('email', $email)->first();
+        $user = User::where('email', $email)->first();
         if ($user === null) {
             return redirect('auth/reset', [], [
                 'errors.email' => 'That email address doesn\'t match any user accounts. Are you sure you\'ve registered?',
@@ -144,13 +144,13 @@ class ResetController extends Controller
         // Reset the password.
 
         /** @var User $user */
-        $user = User::whereIs('email', $email)->first();
+        $user = User::where('email', $email)->first();
         if ($user === null) {
-            abort(HTTP_STATUS_BAD_REQUEST);
+            abort(Response::HTTP_BAD_REQUEST);
         }
         $user->password = bcrypt($input['password']);
         $user->save();
-        database()->table('password_resets')->whereIs('email', $email)->delete();
+        database()->table('password_resets')->where('email', $email)->delete();
 
         // Login the user
 
@@ -169,9 +169,9 @@ class ResetController extends Controller
      */
     protected function checkToken($email, $token)
     {
-        $rs = database()->table('password_resets')->whereIs('email', $email)->whereIs('token', $token)->first();
+        $rs = database()->table('password_resets')->where('email', $email)->where('token', $token)->first();
         if ($rs === null) {
-            abort(HTTP_STATUS_FORBIDDEN, 'Token is invalid.');
+            abort(Response::HTTP_FORBIDDEN, 'Token is invalid.');
         }
     }
 
