@@ -45,12 +45,6 @@ class RegisterController extends Controller
         $input = request()->input();
 
         // Validate the input.
-
-//        $validator = Validator::make($input, array_except(User::getRules(), 'role'));
-//        if ($validator->fails()) {
-//            $this->throwValidationException($request, $validator);
-//        }
-
         $email = $input['email'];
         $user = User::where('email', $email)->first();
         if ($user !== null) {
@@ -60,7 +54,7 @@ class RegisterController extends Controller
             ]);
         }
 
-        if ($input['password'] !== $input['password_confirmation']) { // todo entfällt, wenn Validator realisiert ist
+        if ($input['password'] !== $input['password_confirmation']) {
             return redirect('auth/register', [], [
                 'errors.password_confirmation' => 'Das Kennwort stimmt nicht überein.',
                 'input' => $input,

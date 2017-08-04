@@ -1,14 +1,14 @@
 @extends('app')
 
 @section('content')
-    <h2>{{t('authentication.index_title')}}</h2>
+    <h2>{{t('authentication.index.title')}}</h2>
     <div class ="row">
         <div class="col-xs-8 col-sm-6">
             @include('_search')
         </div>
         <div class="col-xs-4 col-sm-6 text-right">
             <a href="{{url('admin/users/create')}}" class="btn btn-sm btn-info">
-                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Neu
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> {{t('authentication.index.new-button')}}
             </a>
         </div>
     </div>
@@ -19,11 +19,11 @@
         <table class="table table-hover table-striped table-bordered multiactions">
             <thead>
                 <tr>
-                    <th>{!!sort_column('id', 'ID')!!}</th>
-                    <th>{!!sort_column('name', 'Benutzername')!!}</th>
-                    <th>{!!sort_column('email', 'E-Mail-Adresse')!!}</th>
-                    <th>{!!sort_column('role', 'Benutzerrolle')!!}</th>
-                    {{--<th>{!!sort_column('updated_at', 'Aktualisiert')!!}</th>--}}
+                    <th>{!!sort_column('id',         t('authentication.models.id'))!!}</th>
+                    <th>{!!sort_column('name',       t('authentication.models.username'))!!}</th>
+                    <th>{!!sort_column('email',      t('authentication.models.email'))!!}</th>
+                    <th>{!!sort_column('role',       t('authentication.models.role'))!!}</th>
+                    {{--<th>{!!sort_column('updated_at', t('authentication.models.updated_at'))!!}</th>--}}
                     <th class="text-right"></th>
                 </tr>
             </thead>
@@ -35,8 +35,8 @@
                         <td>
                             {{$user->email}}
                             @if(!empty($user->confirmation_token))
-                                <span class="glyphicon glyphicon-exclamation-sign" style="color:red" aria-hidden="true" title="Echtheit noch nicht bestätigt"></span>
-                                <span class="btn-group btn-group-xs"><a href="{{url('admin/users/' . $user->id . '/confirm')}}" class="btn btn-default">Echtheit bestätigen</a></span>
+                                <span class="glyphicon glyphicon-exclamation-sign" style="color:red" aria-hidden="true" title="{{t('authentication.index.not_confirmed')}}"></span>
+                                <span class="btn-group btn-group-xs"><a href="{{url('admin/users/' . $user->id . '/confirm')}}" class="btn btn-default">{{t('authentication.index.confirmed')}}</a></span>
                             @endif
                         </td>
                         <td>{{$user->role}}</td>

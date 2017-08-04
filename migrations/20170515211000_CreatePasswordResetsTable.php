@@ -13,10 +13,10 @@ class CreatePasswordResetsTable implements Migration
         $db->schema()->createTable('password_resets', [
             'email'      => ['type' => 'string'],
             'token'      => ['type' => 'string', 'size' =>  60],
-//            'created_at' => ['type' => 'timestamp'], // todo!
+//            'created_at' => ['type' => 'timestamp'],
         ]);
 
-        $db->schema()->addIndex('password_resets', null, ['columns' => ['email', 'token'], 'unique'  => true]);
+        $db->schema()->addIndex('password_resets', ['email', 'token'], ['unique'  => true]);
     }
 
     /**

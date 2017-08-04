@@ -45,11 +45,6 @@ class ResetController extends Controller
         $input = request()->input();
 
         // Validate the input.
-
-//        $validator = Validator::make($input, ['email' => 'required|email']); // todo email-Format prüfen
-//        if ($validator->fails()) {
-//            $this->throwValidationException($request, $validator);
-//        }
         if (empty($input['email'])) {
             return redirect('auth/reset', [], [
                 'errors.email' => 'E-Mail-Adresse ist erforderlich.',
@@ -80,7 +75,7 @@ class ResetController extends Controller
     protected function createToken($email)
     {
         $token = random_string(60);
-        database()->table('password_resets')->insert(compact('email', 'token')); // todo expire 60 Min. hinzufüen
+        database()->table('password_resets')->insert(compact('email', 'token'));
 
         return $token;
     }
@@ -134,7 +129,7 @@ class ResetController extends Controller
         $token = $input['token'];
         $this->checkToken($email, $token);
 
-        if ($input['password'] !== $input['password_confirmation']) { // todo entfällt, wenn Validator realisiert ist
+        if ($input['password'] !== $input['password_confirmation']) {
             return redirect('auth/reset/' . $token, [], [
                 'errors.password_confirmation' => 'Das Kennwort stimmt nicht überein.',
                 'input' => $input,

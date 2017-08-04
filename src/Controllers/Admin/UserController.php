@@ -4,6 +4,7 @@ namespace Pletfix\Authentication\Controllers\Admin;
 
 use App\Models\User;
 use Core\Services\Contracts\Response;
+use SebastianBergmann\CodeCoverage\RuntimeException;
 
 class UserController
 {
@@ -55,13 +56,6 @@ class UserController
     {
         $input = request()->input();
 
-//        $validation = Validator::make($input, str_replace('{id}', null, User::$rules)); // todo!!
-//        if (!$validation->passes()) {
-//            return redirect('admin/users')
-//                ->flashError(!Fehlerhafte Eingabe')
-//                ->flashInput($input);
-//        }
-
         if ($input['password'] !== $input['password_confirmation']) {
             unset($input['password']);
             unset($input['password_confirmation']);
@@ -75,7 +69,13 @@ class UserController
         unset($input['password_confirmation']);
         unset($input['_method']);
         unset($input['_token']);
-        User::create($input); // todo Was machen wenn es nicht klappt?
+
+        if (User::create($input) === false) {
+            return redirect('admin/users', [], [
+                'errors' => ['Unable to create the user account.'],
+            ]);
+            //throw new RuntimeException('Unable to create user account.');
+        };
 
         return redirect('admin/users', [], [
             'message' => 'Der Benutzer-Account wurde erstellt.'
@@ -96,7 +96,12 @@ class UserController
             abort(Response::HTTP_BAD_REQUEST, 'User #' . $id . ' not found!');
         }
 
-        $user->delete(); // todo Was machen wenn es nicht klappt?
+        if (!$user->delete()) {
+            return redirect('admin/users', [], [
+                'errors' => ['Unable to delete the user account.'],
+            ]);
+            //throw new RuntimeException('Unable to delete the user account.');
+        };
 
         return redirect('admin/users', [], [
             'message' => 'Der Benutzer-Account wurde gelöscht.'

@@ -49,20 +49,14 @@ class PasswordController extends Controller
 
         $input = request()->input();
 
-        // todo!
-//        $validator =  Validator::make($inputs, array_only($user->getRules(), 'password'));
-//        if ($validator->fails()) {
-//            return redirect()->back()->withInput()->withErrors($validator);
-//        }
-
-        if ($user === null || !password_verify($input['old_password'], $user->password)) { // todo entfällt evtl., wenn Validator realisiert ist
+        if ($user === null || !password_verify($input['old_password'], $user->password)) {
             return redirect('auth/password', [], [
                 'errors.old_password' => 'Das Kennwort ist nicht korrekt.',
                 //'input' => $input,
             ]);
         }
 
-        if ($input['password'] !== $input['password_confirmation']) { // todo entfällt, wenn Validator realisiert ist
+        if ($input['password'] !== $input['password_confirmation']) {
             return redirect('auth/password', [], [
                 'errors.password_confirmation' => 'Das Kennwort stimmt nicht überein.',
                 //'input' => $input,

@@ -2,22 +2,20 @@
 
 return [
 
-    /*
-    |--------------------------------------------------------------------------
-    | Action Language Lines
-    |--------------------------------------------------------------------------
-    |
-    | The following language lines are used by the action model and controller.
-    |
-    */
+    'index' => [
+        'new-button'    => 'Neu',
+        'title'         => 'Benutzer-Accounts',
+        'confirmed'     => 'Echtheit bestätigt',
+        'not_confirmed' => 'Echtheit noch nicht bestätigt',
+    ],
 
-    'index_title'   => 'Benutzer-Accounts',
-    'over'          => 'Das Spiel ist vorbei.',
-    'begin'         => 'Eine neue Spielrunde beginnt.',
-    'end'           => 'Die aktuelle Spielrunde wurde beendet.',
-    'move'          => 'Ein Spielzug wurde durchgeführt.',
-    'turn'          => 'Dein Bot ist jetzt an der Reihe und kann nun seinen Spielzug auszuführen.',
-    'reminder'      => 'Dein Bot muss jetzt seinen Spielzug ausführen, ansonsten wird er disqualifiziert!',
-    'disqualified'  => 'Ein Bot wurde von der aktuellen Spielrunde disqualifiziert.',
-    'chat'          => 'Ein Bot hat etwas gesagt.',
+    'models' => [
+        'email'      => 'E-Mail-Adresse',
+        'id'         => 'ID',
+        'role'       => 'Benutzerrolle',
+        'updated_at' => 'Aktualisiert',
+        'username'   => 'Benutzername',
+
+    ],
+
 ];
