@@ -38,10 +38,9 @@ class LoginController extends Controller
 
         if (!auth()->login($input)) {
             unset($input['password']);
-            return redirect('auth/login', [], [
-                'errors' => ['E-Mail-Adresse oder Kennwort ist nicht korrekt.'],
-                'input'  => $input,
-            ]);
+            return redirect('auth/login')
+                ->withInput($input)
+                ->withError('E-Mail-Adresse oder Kennwort ist nicht korrekt.');
         }
 
         $url = session('origin_url', url($this->redirectTo));

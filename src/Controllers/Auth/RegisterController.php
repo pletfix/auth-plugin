@@ -48,17 +48,15 @@ class RegisterController extends Controller
         $email = $input['email'];
         $user = User::where('email', $email)->first();
         if ($user !== null) {
-            return redirect('auth/register', [], [
-                'errors.email' => 'Diese E-Mail-Adresse ist bereits registriert.',
-                'input' => $input,
-            ]);
+            return redirect('auth/register')
+                ->withInput($input)
+                ->withError('Diese E-Mail-Adresse ist bereits registriert.', 'email');
         }
 
         if ($input['password'] !== $input['password_confirmation']) {
-            return redirect('auth/register', [], [
-                'errors.password_confirmation' => 'Das Kennwort stimmt nicht überein.',
-                'input' => $input,
-            ]);
+            return redirect('auth/register')
+                ->withInput($input)
+                ->withError('Das Kennwort stimmt nicht überein.', 'password_confirmation');
         }
 
         // Create the user account.
@@ -73,7 +71,8 @@ class RegisterController extends Controller
 
         $this->sendMail($user);
 
-        return redirect($this->redirectTo, [], ['message' => 'Eine E-Mail wurde zwecks Verifizierung an dich versendet!']);
+        return redirect($this->redirectTo)
+            ->withMessage('Eine E-Mail wurde zwecks Verifizierung an dich versendet!');
     }
 
     /**
@@ -155,11 +154,13 @@ class RegisterController extends Controller
         }
 
         if (empty($user->confirmation_token)) {
-            return redirect($this->redirectTo, [], ['message' => 'Die E-Mail-Adresse wurde inzwischen verifiziert.']);
+            return redirect($this->redirectTo)
+                ->withMessage('Die E-Mail-Adresse wurde inzwischen verifiziert.');
         }
 
         $this->sendMail($user);
 
-        return redirect($this->redirectTo, [], ['message' => 'Eine E-Mail wurde zwecks Verifizierung an dich versendet!']); // redirect()->back()->with('message', 'Eine E-Mail zur Verifizierung wurde versendet.');
+        return redirect($this->redirectTo)
+            ->withMessage('Eine E-Mail wurde zwecks Verifizierung an dich versendet!');
     }
 }

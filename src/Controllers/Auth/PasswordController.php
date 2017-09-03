@@ -50,22 +50,19 @@ class PasswordController extends Controller
         $input = request()->input();
 
         if ($user === null || !password_verify($input['old_password'], $user->password)) {
-            return redirect('auth/password', [], [
-                'errors.old_password' => 'Das Kennwort ist nicht korrekt.',
-                //'input' => $input,
-            ]);
+            return redirect('auth/password')
+                ->withError('Das Kennwort ist nicht korrekt.', 'errors.old_password');
         }
 
         if ($input['password'] !== $input['password_confirmation']) {
-            return redirect('auth/password', [], [
-                'errors.password_confirmation' => 'Das Kennwort stimmt nicht überein.',
-                //'input' => $input,
-            ]);
+            return redirect('auth/password')
+                ->withError('Das Kennwort stimmt nicht überein.', 'password_confirmation');
         }
 
         $user->password = bcrypt($input['password']);
         $user->save();
 
-        return redirect($this->redirectTo, [], ['message' => 'Dein Kennwort wurde geändert!']);
+        return redirect($this->redirectTo)
+            ->withMessage('Dein Kennwort wurde geändert!');
     }
 }

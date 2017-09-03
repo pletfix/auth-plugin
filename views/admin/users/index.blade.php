@@ -69,4 +69,6 @@
             </tbody>
         </table>
     </div>
+
+    @include('_pagination')
 @endsection

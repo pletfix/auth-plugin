@@ -46,24 +46,23 @@ class ResetController extends Controller
 
         // Validate the input.
         if (empty($input['email'])) {
-            return redirect('auth/reset', [], [
-                'errors.email' => 'E-Mail-Adresse ist erforderlich.',
-                'input' => $input,
-            ]);
+            return redirect('auth/reset')
+                ->withInput($input)
+                ->withError('E-Mail-Adresse ist erforderlich.', 'email');
         }
 
         $email = $input['email'];
         $user = User::where('email', $email)->first();
         if ($user === null) {
-            return redirect('auth/reset', [], [
-                'errors.email' => 'That email address doesn\'t match any user accounts. Are you sure you\'ve registered?',
-                'input' => $input,
-            ]);
+            return redirect('auth/reset')
+                ->withInput($input)
+                ->withError('That email address doesn\'t match any user accounts. Are you sure you\'ve registered?', 'email');
         }
 
         $this->sendMail($user, $this->createToken($email));
 
-        return redirect($this->redirectTo, [], ['message' => 'Eine E-Mail zum Zurücksetzen des Kennworts wurde versendet']);
+        return redirect($this->redirectTo)
+            ->withMessage('Eine E-Mail zum Zurücksetzen des Kennworts wurde versendet');
     }
 
     /**
@@ -130,10 +129,9 @@ class ResetController extends Controller
         $this->checkToken($email, $token);
 
         if ($input['password'] !== $input['password_confirmation']) {
-            return redirect('auth/reset/' . $token, [], [
-                'errors.password_confirmation' => 'Das Kennwort stimmt nicht überein.',
-                'input' => $input,
-            ]);
+            return redirect('auth/reset/' . $token)
+                ->withInput($input)
+                ->withError('Das Kennwort stimmt nicht überein.', 'password_confirmation');
         }
 
         // Reset the password.
@@ -151,7 +149,8 @@ class ResetController extends Controller
 
         auth()->setPrincipal($user->id, $user->name, $user->role);
 
-        return redirect($this->redirectTo, [], ['message' => 'Dein Kennwort wurde geändert!']);
+        return redirect($this->redirectTo)
+            ->withMessage('Dein Kennwort wurde geändert!');
     }
 
     /**

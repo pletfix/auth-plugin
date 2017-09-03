@@ -4,7 +4,7 @@ namespace Pletfix\Authentication\Controllers\Admin;
 
 use App\Models\User;
 use Core\Services\Contracts\Response;
-use SebastianBergmann\CodeCoverage\RuntimeException;
+use Core\Services\PDOs\Builders\Contracts\Builder;
 
 class UserController
 {
@@ -17,6 +17,7 @@ class UserController
     {
         $input = request()->input();
 
+        /** @var Builder $builder */
         $builder = User::builder();
 
 //        $searchTerm = $input['search'];
@@ -30,11 +31,10 @@ class UserController
             $builder->orderBy($sortby . ' ' . $order);
         }
 
-//        $itemsPerPage = 20;
-//        $users = $builder->paginate($itemsPerPage)->appends($input);
-        $users = collect($builder->all());
+        $paginator = paginator($builder->count(), 1);
+        $users = collect($builder->offset($paginator->offset())->limit($paginator->limit())->all());
 
-        return view('admin.users.index', compact('users'));
+        return view('admin.users.index', compact('paginator', 'users'));
     }
 
     /**
@@ -59,10 +59,9 @@ class UserController
         if ($input['password'] !== $input['password_confirmation']) {
             unset($input['password']);
             unset($input['password_confirmation']);
-            return redirect('admin/users/create', [], [
-                'errors.password_confirmation' => 'Das Kennwort stimmt nicht überein.',
-                'input' => $input,
-            ]);
+            return redirect('admin/users/create')
+                ->withInput($input)
+                ->withError('Das Kennwort stimmt nicht überein.', 'password_confirmation');
         }
 
         $input['password'] = bcrypt($input['password']);
@@ -71,15 +70,13 @@ class UserController
         unset($input['_token']);
 
         if (User::create($input) === false) {
-            return redirect('admin/users', [], [
-                'errors' => ['Unable to create the user account.'],
-            ]);
+            return redirect('admin/users')
+                ->withError('Unable to create the user account.');
             //throw new RuntimeException('Unable to create user account.');
         };
 
-        return redirect('admin/users', [], [
-            'message' => 'Der Benutzer-Account wurde erstellt.'
-        ]);
+        return redirect('admin/users')
+            ->withMessage('Der Benutzer-Account wurde erstellt.');
     }
 
     /**
@@ -97,15 +94,13 @@ class UserController
         }
 
         if (!$user->delete()) {
-            return redirect('admin/users', [], [
-                'errors' => ['Unable to delete the user account.'],
-            ]);
+            return redirect('admin/users')
+                ->withError('Unable to create the user account.');
             //throw new RuntimeException('Unable to delete the user account.');
         };
 
-        return redirect('admin/users', [], [
-            'message' => 'Der Benutzer-Account wurde gelöscht.'
-        ]);
+        return redirect('admin/users')
+            ->withMessage('Der Benutzer-Account wurde gelöscht.');
     }
 
     /**
@@ -161,16 +156,15 @@ class UserController
         $input = request()->input();
         //$validation = Validator::make($input, str_replace('{id}', $user->id, User::$rules));
 //        if (!$validation->passes()) {
-//            return redirect('admin.users.edit', $id)->withInput()->flashErrors($validation);
+//            return redirect('admin.users.edit', $id)->withInput()->withErrors($validation);
 //        }
         if (!empty($input['password'])) {
             if ($input['password'] !== $input['password_confirmation']) {
                 unset($input['password']);
                 unset($input['password_confirmation']);
-                return redirect('admin/users/' . $id . '/edit', [], [
-                    'errors.password_confirmation' => 'Das Kennwort stimmt nicht überein.',
-                    'input' => $input,
-                ]);
+                return redirect('admin/users/' . $id . '/edit')
+                    ->withInput($input)
+                    ->withError('Das Kennwort stimmt nicht überein.', 'password_confirmation');
             }
             $input['password'] = bcrypt($input['password']);
         }
@@ -184,9 +178,8 @@ class UserController
 
         $user->update($input);
 
-        return redirect('admin/users', [], [
-            'message' => 'Der Benutzer-Account wurde aktualisiert.'
-        ]);
+        return redirect('admin/users')
+            ->withMessage('Der Benutzer-Account wurde aktualisiert.');
     }
 
     /**
@@ -223,8 +216,7 @@ class UserController
         $user->confirmation_token = null;
         $user->save();
 
-        return redirect('admin/users', [], [
-            'message' => 'Echtheit der E-Mail-Adresse bestätigt.'
-        ]);
+        return redirect('admin/users')
+            ->withMessage('Echtheit der E-Mail-Adresse bestätigt.');
     }
 }
