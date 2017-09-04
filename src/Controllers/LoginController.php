@@ -1,6 +1,6 @@
 <?php
 
-namespace Pletfix\Authentication\Controllers\Auth;
+namespace Pletfix\Auth\Controllers;
 
 use App\Controllers\Controller;
 use Core\Services\Contracts\Response;

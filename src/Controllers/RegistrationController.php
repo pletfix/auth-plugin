@@ -1,6 +1,6 @@
 <?php
 
-namespace Pletfix\Authentication\Controllers\Auth;
+namespace Pletfix\Auth\Controllers;
 
 use App\Controllers\Controller;
 use App\Models\User;
@@ -9,7 +9,7 @@ use Core\Services\Contracts\Response;
 /**
  * This controller handles the registration of new users as well as their validation and creation.
  */
-class RegisterController extends Controller
+class RegistrationController extends Controller
 {
     /**
      * Where to redirect users after registration.

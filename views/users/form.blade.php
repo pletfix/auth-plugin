@@ -15,7 +15,7 @@
                 </div>
                 <div class="panel-body">
                     @include('_errors')
-                    <form method="POST" action="{{url('admin/users' . (isset($user->id) ? '/' . $user->id : ''))}}" accept-charset="UTF-8" class="form-horizontal">
+                    <form method="POST" action="{{url('auth/users' . (isset($user->id) ? '/' . $user->id : ''))}}" accept-charset="UTF-8" class="form-horizontal">
                         @if(isset($user->id))
                             <input name="_method" value="PATCH" type="hidden"/>
                         @endif
@@ -102,7 +102,7 @@
                                 <button title="Speichern" class="btn btn-primary" type="submit">
                                     <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Speichern
                                 </button>
-                                <a href="{{url('admin/users')}}" class="btn btn-default">Abbruch</a>
+                                <a href="{{url('auth/users')}}" class="btn btn-default">Abbruch</a>
                             </div>
                         </div>
                     </form>

@@ -14,11 +14,11 @@ to store the user attributes.
 
 Fetch the package by running the following terminal command under the application's directory:
 
-    composer require pletfix/authentication
+    composer require pletfix/auth
 
 After downloading, enter this command in your terminal to register the plugin:
 
-    php console plugin pletfix/authentication 
+    php console plugin pletfix/auth 
     
 Execute the `migrate` command to create a `password_resets`database table:
  
@@ -31,7 +31,7 @@ Execute the `migrate` command to create a `password_resets`database table:
 If you would like to modified the views of the plugin, copy them to the application's view directory, where you can edit 
 the views as you wish:
      
-    cp -R ./vendor/pletfix/authentication/views/* ./resources/views/
+    cp -R ./vendor/pletfix/auth/views/* ./resources/views/
  
 For example, if you have installed the [Pletfix Application Skeleton](https://github.com/pletfix/app), you could add the 
 suitable menu items by by adding the following partials in your `resources/views/app.blade.php` layout:
@@ -60,36 +60,38 @@ user management frontend:
 ### Routes
    
 If you don't use the `manage-user`ability, or if you like to use an another route path, have a look in the plugin's 
-route entries in `./vendor/pletfix/authentication/config/routes.php`. 
+route entries in `./vendor/pletfix/auth/config/routes.php`. 
 You can override or modify the route entries in the application's route file `./config/boot/routes.php` like you wish:
 
     // Registration Routes
-    $route->get('auth/register',          'Auth\RegisterController@showForm');
-    $route->post('auth/register',         'Auth\RegisterController@register');
-    $route->get('auth/register/{token}',  'Auth\RegisterController@confirm');
-    $route->get('auth/register/resend',   'Auth\RegisterController@resend', 'Auth');
-
+    $route->get('auth/register',          'RegistrationController@showForm');
+    $route->post('auth/register',         'RegistrationController@register');
+    $route->get('auth/register/{token}',  'RegistrationController@confirm');
+    $route->get('auth/register/resend',   'RegistrationController@resend', 'Auth');
+    
     // Authentication Routes
-    $route->get('auth/login',             'Auth\LoginController@showForm');
-    $route->post('auth/login',            'Auth\LoginController@login');
-    $route->post('auth/logout',           'Auth\LoginController@logout', 'Auth');
+    $route->get('auth/login',             'LoginController@showForm');
+    $route->post('auth/login',            'LoginController@login');
+    $route->post('auth/logout',           'LoginController@logout', 'Auth');
     
     // Password Reset Routes
-    $route->get('auth/reset',             'Auth\ResetController@showForgotForm');
-    $route->post('auth/reset/send',       'Auth\ResetController@send');
-    $route->get('auth/reset/{token}',     'Auth\ResetController@showResetForm');
-    $route->post('auth/reset',            'Auth\ResetController@reset');
+    $route->get('auth/reset',             'PasswordResetController@showForgotForm');
+    $route->post('auth/reset/send',       'PasswordResetController@send');
+    $route->get('auth/reset/{token}',     'PasswordResetController@showResetForm');
+    $route->post('auth/reset',            'PasswordResetController@reset');
     
     // Password Change Routes
     $route->middleware('Auth', function(Route $route) {
-        $route->get('auth/password',      'Auth\PasswordController@showForm');
-        $route->post('auth/password',     'Auth\PasswordController@change');
+        $route->get('auth/password',      'PasswordChangeController@showForm');
+        $route->post('auth/password',     'PasswordChangeController@change');
     });
-
+    
     // User Management Routes
-    $route->get('admin/users/{user}/replicate', 'Admin\UserController@replicate');
-    $route->get('admin/users/{user}/confirm',   'Admin\UserController@confirm');
-    $route->resource('admin/users',             'Admin\UserController');
+    $route->middleware('Ability:manage-user', function(Route $route) {
+        $route->get('auth/users/{user}/replicate', 'UserManagerController@replicate');
+        $route->get('auth/users/{user}/confirm',   'UserManagerController@confirm');
+        $route->resource('auth/users',             'UserManagerController');
+    });
     
 ## Usage
 
@@ -99,14 +101,14 @@ Enter the following URL into your Browser to open the registration form:
 
     https://<your-application>/auth/register
 
-![Registration Form](https://raw.githubusercontent.com/pletfix/authentication/master/docs/screenshot1.png)
+![Registration Form](https://raw.githubusercontent.com/pletfix/auth/master/docs/screenshot1.png)
 
 After the user submitted the form, a new entity is saved into the user model (with a "guest" role) so that the user is 
 log in into the application immediately (but only as a guest). 
 
 A mail is sent to the email address the user has entered.  
 
-![Registration Mail](https://raw.githubusercontent.com/pletfix/authentication/master/docs/screenshot2.png)
+![Registration Mail](https://raw.githubusercontent.com/pletfix/auth/master/docs/screenshot2.png)
 
 While the user is logged in, he may resend the mail by entering this URL:
 
@@ -114,7 +116,7 @@ While the user is logged in, he may resend the mail by entering this URL:
 
 If the user confirms the email, their role is updated to "user" and a confirmation message is printed: 
  
-![Confirm Registration](https://raw.githubusercontent.com/pletfix/authentication/master/docs/screenshot3.png)
+![Confirm Registration](https://raw.githubusercontent.com/pletfix/auth/master/docs/screenshot3.png)
  
 ### Login and Logout
 
@@ -122,7 +124,7 @@ The URLs to login into the application is this:
 
     https://<your-application>/auth/login
     
-![Login](https://raw.githubusercontent.com/pletfix/authentication/master/docs/screenshot4.png)    
+![Login](https://raw.githubusercontent.com/pletfix/auth/master/docs/screenshot4.png)    
 
 If the user ticks "remember-me", a long life (5 years) cookie is created on the browser. If the PHP session expires 
 (because has close the browser and opens it later for example), the User will be re-login automaticaly.
@@ -139,15 +141,15 @@ To reset the password, two forms are needed. Enter this to start the reset proce
 
     https://<your-application>/auth/reset
 
-![Forgot Password](https://raw.githubusercontent.com/pletfix/authentication/master/docs/screenshot5.png)    
+![Forgot Password](https://raw.githubusercontent.com/pletfix/auth/master/docs/screenshot5.png)    
 
 After submit a random token is saved into the `password_resets` database table and a mail is send to this email address.
 
-![Reset Password Mail](https://raw.githubusercontent.com/pletfix/authentication/master/docs/screenshot6.png)   
+![Reset Password Mail](https://raw.githubusercontent.com/pletfix/auth/master/docs/screenshot6.png)   
 
 If the user confirms the email, the token will be matched and the second form to receive the new password is opened:
 
-![Reset Password](https://raw.githubusercontent.com/pletfix/authentication/master/docs/screenshot7.png)   
+![Reset Password](https://raw.githubusercontent.com/pletfix/auth/master/docs/screenshot7.png)   
 
 ### Change Password
 
@@ -155,14 +157,14 @@ The user may change their password quickly if already log in:
 
     https://<your-application>/auth/reset
 
-![Change Password](https://raw.githubusercontent.com/pletfix/authentication/master/docs/screenshot8.png)   
+![Change Password](https://raw.githubusercontent.com/pletfix/auth/master/docs/screenshot8.png)   
 
 ### User Management Frontend
 
 Enter the following URL into your Browser to open the user management:
 
-    https://<your-application>/admin/users
+    https://<your-application>/auth/users
 
-![User Management](https://raw.githubusercontent.com/pletfix/authentication/master/docs/screenshot9.png)
+![User Management](https://raw.githubusercontent.com/pletfix/auth/master/docs/screenshot9.png)
 
-![User Management](https://raw.githubusercontent.com/pletfix/authentication/master/docs/screenshot10.png)
+![User Management](https://raw.githubusercontent.com/pletfix/auth/master/docs/screenshot10.png)

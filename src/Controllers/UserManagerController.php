@@ -1,12 +1,12 @@
 <?php
 
-namespace Pletfix\Authentication\Controllers\Admin;
+namespace Pletfix\Auth\Controllers;
 
 use App\Models\User;
 use Core\Services\Contracts\Response;
 use Core\Services\PDOs\Builders\Contracts\Builder;
 
-class UserController
+class UserManagerController
 {
     /**
      * Lists all users.
@@ -31,10 +31,10 @@ class UserController
             $builder->orderBy($sortby . ' ' . $order);
         }
 
-        $paginator = paginator($builder->count(), 1);
+        $paginator = paginator($builder->count(), 20);
         $users = collect($builder->offset($paginator->offset())->limit($paginator->limit())->all());
 
-        return view('admin.users.index', compact('paginator', 'users'));
+        return view('auth.users.index', compact('paginator', 'users'));
     }
 
     /**
@@ -44,7 +44,7 @@ class UserController
      */
     public function create()
     {
-        return view('admin.users.form', ['user' => new User]);
+        return view('auth.users.form', ['user' => new User]);
     }
 
     /**
@@ -59,7 +59,7 @@ class UserController
         if ($input['password'] !== $input['password_confirmation']) {
             unset($input['password']);
             unset($input['password_confirmation']);
-            return redirect('admin/users/create')
+            return redirect('auth/users/create')
                 ->withInput($input)
                 ->withError('Das Kennwort stimmt nicht überein.', 'password_confirmation');
         }
@@ -70,12 +70,12 @@ class UserController
         unset($input['_token']);
 
         if (User::create($input) === false) {
-            return redirect('admin/users')
+            return redirect('auth/users')
                 ->withError('Unable to create the user account.');
             //throw new RuntimeException('Unable to create user account.');
         };
 
-        return redirect('admin/users')
+        return redirect('auth/users')
             ->withMessage('Der Benutzer-Account wurde erstellt.');
     }
 
@@ -94,12 +94,12 @@ class UserController
         }
 
         if (!$user->delete()) {
-            return redirect('admin/users')
+            return redirect('auth/users')
                 ->withError('Unable to create the user account.');
             //throw new RuntimeException('Unable to delete the user account.');
         };
 
-        return redirect('admin/users')
+        return redirect('auth/users')
             ->withMessage('Der Benutzer-Account wurde gelöscht.');
     }
 
@@ -117,7 +117,7 @@ class UserController
             abort(Response::HTTP_BAD_REQUEST, 'User #' . $id . ' not found!');
         }
 
-        return view('admin.users.form', ['user' => $user]);
+        return view('auth.users.form', ['user' => $user]);
     }
 
     /**
@@ -136,7 +136,7 @@ class UserController
 
         $user = $user->replicate();
 
-        return view('admin.users.form', ['user' => $user]);
+        return view('auth.users.form', ['user' => $user]);
     }
 
     /**
@@ -156,13 +156,13 @@ class UserController
         $input = request()->input();
         //$validation = Validator::make($input, str_replace('{id}', $user->id, User::$rules));
 //        if (!$validation->passes()) {
-//            return redirect('admin.users.edit', $id)->withInput()->withErrors($validation);
+//            return redirect('auth.users.edit', $id)->withInput()->withErrors($validation);
 //        }
         if (!empty($input['password'])) {
             if ($input['password'] !== $input['password_confirmation']) {
                 unset($input['password']);
                 unset($input['password_confirmation']);
-                return redirect('admin/users/' . $id . '/edit')
+                return redirect('auth/users/' . $id . '/edit')
                     ->withInput($input)
                     ->withError('Das Kennwort stimmt nicht überein.', 'password_confirmation');
             }
@@ -178,7 +178,7 @@ class UserController
 
         $user->update($input);
 
-        return redirect('admin/users')
+        return redirect('auth/users')
             ->withMessage('Der Benutzer-Account wurde aktualisiert.');
     }
 
@@ -196,7 +196,7 @@ class UserController
             abort(Response::HTTP_BAD_REQUEST, 'User #' . $id . ' not found!');
         }
 
-        return view('admin.users.show', compact('user'));
+        return view('auth.users.show', compact('user'));
     }
 
     /**
@@ -216,7 +216,7 @@ class UserController
         $user->confirmation_token = null;
         $user->save();
 
-        return redirect('admin/users')
+        return redirect('auth/users')
             ->withMessage('Echtheit der E-Mail-Adresse bestätigt.');
     }
 }

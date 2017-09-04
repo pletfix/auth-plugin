@@ -1,6 +1,6 @@
 <?php
 
-namespace Pletfix\Authentication\Controllers\Auth;
+namespace Pletfix\Auth\Controllers;
 
 use App\Controllers\Controller;
 use App\Models\User;
@@ -9,7 +9,7 @@ use Core\Services\Contracts\Response;
 /**
  * This controller is responsible for handling password reset requests.
  */
-class ResetController extends Controller
+class PasswordResetController extends Controller
 {
     /**
      * Where to redirect users after reset password.

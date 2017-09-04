@@ -67,11 +67,11 @@
                     {{--<br/>--}}
                     <div class="row">
                         <div class="col-xs-12 col-sm-9 col-sm-offset-3">
-                            <a href="{{url('admin/users/' . $user->id . '/edit')}}" class="btn btn-sm btn-info" title="bearbeiten">
+                            <a href="{{url('auth/users/' . $user->id . '/edit')}}" class="btn btn-sm btn-info" title="bearbeiten">
                                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                                 Bearbeiten
                             </a>
-                            <a href="{{url('admin/users')}}" class="btn btn-sm btn-default">Zurück</a>
+                            <a href="{{url('auth/users')}}" class="btn btn-sm btn-default">Zurück</a>
                         </div>
                     </div>
                 </div>

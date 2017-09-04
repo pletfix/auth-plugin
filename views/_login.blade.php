@@ -25,7 +25,7 @@
             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-wrench" aria-hidden="true"></i> Administration<b class="caret"></b></a>
             <ul class="dropdown-menu">
                 @can('manage-user')
-                    <li><a href="{{url('admin/users')}}">Benutzerverwaltung</a></li>
+                    <li><a href="{{url('auth/users')}}">Benutzerverwaltung</a></li>
                 @endcan
             </ul>
         </li>

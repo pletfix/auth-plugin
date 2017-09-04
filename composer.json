@@ -1,5 +1,5 @@
 {
-    "name": "pletfix/authentication",
+    "name": "pletfix/auth",
     "description": "Authentication Plugin for Pletfix",
     "authors": [
         {
@@ -13,7 +13,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Pletfix\\Authentication\\": "src/"
+            "Pletfix\\Auth\\": "src/"
         }
     }
 }
