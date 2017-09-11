@@ -1,6 +1,7 @@
 {
     "name": "pletfix/auth",
     "description": "Authentication Plugin for Pletfix",
+    "keywords": ["pletfix", "plugin", "authentication", "user", "manager", "acl"],
     "authors": [
         {
             "name": "Frank Rohlfing",
