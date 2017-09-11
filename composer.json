@@ -1,5 +1,5 @@
 {
-    "name": "pletfix/auth",
+    "name": "pletfix/auth-plugin",
     "description": "Authentication Plugin for Pletfix",
     "keywords": ["pletfix", "plugin", "authentication", "user", "manager", "acl"],
     "authors": [
