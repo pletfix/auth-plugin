@@ -1,6 +1,6 @@
 @if(!auth()->isLoggedIn())
-    <li><a href="{{url('auth/login')}}"><i class="fa fa-sign-in" aria-hidden="true"></i> Login</a></li>
-    <li><a href="{{url('auth/register')}}"><i class="fa fa-list-alt" aria-hidden="true"></i> Register</a></li>
+    <li><a href="{{url('auth/login')}}"><i class="fa fa-sign-in" aria-hidden="true"></i> {{t('auth.nav.login')}}</a></li>
+    <li><a href="{{url('auth/register')}}"><i class="fa fa-list-alt" aria-hidden="true"></i> {{t('auth.nav.register')}}</a></li>
 @else
     <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -9,10 +9,10 @@
             <span class="caret"></span>
         </a>
         <ul class="dropdown-menu">
-            <li><a href="{{url('auth/password')}}"><i class="fa fa-key" aria-hidden="true"></i> Kennwort ändern</a></li>
+            <li><a href="{{url('auth/password')}}"><i class="fa fa-key" aria-hidden="true"></i> {{t('auth.nav.change_password')}}</a></li>
             <li>
                 <a href="{{url('auth/logout')}}" onclick="event.preventDefault(); $(this).next().submit();">
-                    <i class="fa fa-sign-out" aria-hidden="true"></i> Logout
+                    <i class="fa fa-sign-out" aria-hidden="true"></i> {{t('auth.nav.logout')}}
                 </a>
                 <form action="{{url('auth/logout')}}" method="POST" style="display:none">
                     <input name="_token" value="{{csrf_token()}}" type="hidden"/>
@@ -22,10 +22,10 @@
     </li>
     @can('manage')
         <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-wrench" aria-hidden="true"></i> Administration<b class="caret"></b></a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-wrench" aria-hidden="true"></i> {{t('auth.nav.administration')}}<b class="caret"></b></a>
             <ul class="dropdown-menu">
                 @can('manage-user')
-                    <li><a href="{{url('auth/users')}}">Benutzerverwaltung</a></li>
+                    <li><a href="{{url('auth/users')}}">{{t('auth.nav.user_accounts')}}</a></li>
                 @endcan
             </ul>
         </li>

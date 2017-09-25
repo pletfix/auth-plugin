@@ -61,7 +61,7 @@ class UserManagerController
             unset($input['password_confirmation']);
             return redirect('auth/users/create')
                 ->withInput($input)
-                ->withError('Das Kennwort stimmt nicht überein.', 'password_confirmation');
+                ->withError(t('auth.users.form.password_not_matched'), 'password_confirmation');
         }
 
         $input['password'] = bcrypt($input['password']);
@@ -71,12 +71,11 @@ class UserManagerController
 
         if (User::create($input) === false) {
             return redirect('auth/users')
-                ->withError('Unable to create the user account.');
-            //throw new RuntimeException('Unable to create user account.');
+                ->withError(t('auth.users.form.operation_failed'));
         };
 
         return redirect('auth/users')
-            ->withMessage('Der Benutzer-Account wurde erstellt.');
+            ->withMessage(t('auth.users.form.successful_created'));
     }
 
     /**
@@ -95,12 +94,11 @@ class UserManagerController
 
         if (!$user->delete()) {
             return redirect('auth/users')
-                ->withError('Unable to create the user account.');
-            //throw new RuntimeException('Unable to delete the user account.');
+                ->withError('auth.users.form.operation_failed');
         };
 
         return redirect('auth/users')
-            ->withMessage('Der Benutzer-Account wurde gelöscht.');
+            ->withMessage(t('auth.users.form.successful_deleted'));
     }
 
     /**
@@ -164,7 +162,7 @@ class UserManagerController
                 unset($input['password_confirmation']);
                 return redirect('auth/users/' . $id . '/edit')
                     ->withInput($input)
-                    ->withError('Das Kennwort stimmt nicht überein.', 'password_confirmation');
+                    ->withError(t('auth.users.form.password_not_matched'), 'password_confirmation');
             }
             $input['password'] = bcrypt($input['password']);
         }
@@ -176,10 +174,13 @@ class UserManagerController
         unset($input['_method']);
         unset($input['_token']);
 
-        $user->update($input);
+        if (!$user->update($input)) {
+            return redirect('auth/users')
+                ->withError('auth.users.form.operation_failed');
+        };
 
         return redirect('auth/users')
-            ->withMessage('Der Benutzer-Account wurde aktualisiert.');
+            ->withMessage(t('auth.users.form.successful_updated'));
     }
 
     /**
@@ -217,6 +218,6 @@ class UserManagerController
         $user->save();
 
         return redirect('auth/users')
-            ->withMessage('Echtheit der E-Mail-Adresse bestätigt.');
+            ->withMessage(t('auth.users.form.email_confirmed'));
     }
 }

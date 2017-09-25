@@ -1,19 +1,21 @@
 @extends('app')
 
-@section('title', 'Register successful')
+@section('title', t('auth.confirm.title'))
 
 @section('content')
-    @if($user !== null && empty($user->confirmation_token))
+    <div class="container">
+        @if($user !== null && empty($user->confirmation_token))
 
-        <h3>Hallo {{$user->name}}.</h3>
+            <h3>{{t('auth.confirm.hello', ['name' => $user->name])}}!</h3>
 
-        <p>Du hast es geschafft! Deine Registrierung ist abgeschlossen.</p>
+            <p>{{t('auth.confirm.welcome')}}</p>
 
-        @if(!auth()->isLoggedIn())
-            <a href="{{url('auth/login')}}" class="btn btn-sm btn-info">
-                <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Jetzt einloggen
-            </a>
+            @if(!auth()->isLoggedIn())
+                <a href="{{url('auth/login')}}" class="btn btn-sm btn-info">
+                    <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> {{t('auth.confirm.login')}}
+                </a>
+            @endif
+
         @endif
-
-    @endif
+    </div>
 @endsection

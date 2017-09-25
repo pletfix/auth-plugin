@@ -18,13 +18,6 @@ class PasswordResetController extends Controller
      */
     protected $redirectTo = '';
 
-//    /**
-//     * Create a new controller instance.
-//     */
-//    public function __construct()
-//    {
-//    }
-
     /**
      * Display the form to request a password reset link.
      *
@@ -48,7 +41,7 @@ class PasswordResetController extends Controller
         if (empty($input['email'])) {
             return redirect('auth/reset')
                 ->withInput($input)
-                ->withError('E-Mail-Adresse ist erforderlich.', 'email');
+                ->withError(t('auth.reset.email_required'), 'email');
         }
 
         $email = $input['email'];
@@ -56,13 +49,13 @@ class PasswordResetController extends Controller
         if ($user === null) {
             return redirect('auth/reset')
                 ->withInput($input)
-                ->withError('That email address doesn\'t match any user accounts. Are you sure you\'ve registered?', 'email');
+                ->withError(t('auth.reset.email_unknown'), 'email');
         }
 
         $this->sendMail($user, $this->createToken($email));
 
         return redirect($this->redirectTo)
-            ->withMessage('Eine E-Mail zum Zurücksetzen des Kennworts wurde versendet');
+            ->withMessage(t('auth.reset.sent'));
     }
 
     /**
@@ -88,7 +81,7 @@ class PasswordResetController extends Controller
     protected function sendMail(User $user, $token)
     {
         mailer()
-            ->subject('Your Password Reset Link')
+            ->subject(t('auth.emails.reset.subject'))
             ->to($user->email, $user->name)
             ->view('auth.emails.reset', compact('user', 'token'))
             ->send();
@@ -131,7 +124,7 @@ class PasswordResetController extends Controller
         if ($input['password'] !== $input['password_confirmation']) {
             return redirect('auth/reset/' . $token)
                 ->withInput($input)
-                ->withError('Das Kennwort stimmt nicht überein.', 'password_confirmation');
+                ->withError(t('auth.reset.password_not_matched'), 'password_confirmation');
         }
 
         // Reset the password.
@@ -150,7 +143,7 @@ class PasswordResetController extends Controller
         auth()->setPrincipal($user->id, $user->name, $user->role);
 
         return redirect($this->redirectTo)
-            ->withMessage('Dein Kennwort wurde geändert!');
+            ->withMessage(t('auth.reset.successful'));
     }
 
     /**
@@ -165,7 +158,7 @@ class PasswordResetController extends Controller
     {
         $rs = database()->table('password_resets')->where('email', $email)->where('token', $token)->first();
         if ($rs === null) {
-            abort(Response::HTTP_FORBIDDEN, 'Token is invalid.');
+            abort(Response::HTTP_FORBIDDEN, t('auth.reset.token_invalid'));
         }
     }
 

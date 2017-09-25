@@ -18,13 +18,6 @@ class PasswordChangeController extends Controller
      */
     protected $redirectTo = '';
 
-//    /**
-//     * Create a new password change controller instance.
-//     */
-//    public function __construct()
-//    {
-//    }
-
     /**
      * Display the password change view.
      *
@@ -51,18 +44,18 @@ class PasswordChangeController extends Controller
 
         if ($user === null || !password_verify($input['old_password'], $user->password)) {
             return redirect('auth/password')
-                ->withError('Das Kennwort ist nicht korrekt.', 'errors.old_password');
+                ->withError(t('auth.password.password_invalid'), 'errors.old_password');
         }
 
         if ($input['password'] !== $input['password_confirmation']) {
             return redirect('auth/password')
-                ->withError('Das Kennwort stimmt nicht überein.', 'password_confirmation');
+                ->withError(t('auth.password.password_not_matched'), 'password_confirmation');
         }
 
         $user->password = bcrypt($input['password']);
         $user->save();
 
         return redirect($this->redirectTo)
-            ->withMessage('Dein Kennwort wurde geändert!');
+            ->withMessage(t('auth.password.successful'));
     }
 }

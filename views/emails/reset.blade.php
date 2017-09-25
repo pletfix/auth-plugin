@@ -4,21 +4,21 @@
     <meta charset="utf-8">
 </head>
     <body>
-        <h2>Reset Password</h2>
+        <h2>{{t('auth.emails.reset.heading')}}</h2>
         <div>
             <p>
-                Klick hier, um dein Kennwort zurückzusetzen:
+                {{t('auth.emails.reset.text', ['app' => config('app.name')])}}
             </p>
             <p>
                 <a href="{{url('auth/reset/' . $token, ['email' => $user->email])}}">
-                    Kennwort jetzt zurücksetzen!
+                    {{t('auth.emails.reset.button')}}
                 </a>
             </p>
         </div>
         <hr/>
         <div>
             <i>
-                Falls du das Zurücksetzen des Kennwort nich initiert hast, benachrichtige uns bitte unter
+                {{t('auth.emails.reset.contact')}}
                 <a href="mailto:{{mail_address(config('mail.from', ''))}}">
                     {{config('mail.from')}}
                 </a>.

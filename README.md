@@ -28,25 +28,18 @@ Execute the `migrate` command to create a `password_resets`database table:
     
 ### View    
 
-If you would like to modified the views of the plugin, copy them to the application's view directory, where you can edit 
-the views as you wish:
+If you would like to modified the views of the plugin, create a folder `auth` under the view directory of the application, 
+and copy the views there. Here you can edit the views as you like:
      
+    mkdir ./resources/views/auth 
     cp -R ./vendor/pletfix/auth-plugin/views/* ./resources/views/
- 
-For example, if you have installed the [Pletfix Application Skeleton](https://github.com/pletfix/app), you could add the 
-suitable menu items by by adding the following partials in your `resources/views/app.blade.php` layout:
- 
-- Copy this line just above the marker `{{--left_menu_point--}}`: 
+     
+If you have installed the [Pletfix Application Skeleton](https://github.com/pletfix/app), you could add the necessary 
+menu items ("login", "logout", "register" and so on) by including the partial `_nav_login` in your  
+`resources/views/app.blade.php` layout just above the marker `{{--menu_point--}}`: 
     
-       @include('_username')
+       @include('_nav_login')
     
-- Copy this line just above the marker `{{--right_menu_point--}}`: 
-    
-       @include('_login')
-    
-The `_username` partial prints the username of the current user and `_login` renders the menu items for login, logout, 
-register and so on.
-
 ### Abilities
  
 Add the `manage-user`ability to the Access Control List in `config/auth.php` to control the access to the 
@@ -59,9 +52,9 @@ user management frontend:
 
 ### Routes
    
-If you don't use the `manage-user`ability, or if you like to use an another route path, have a look in the plugin's 
-route entries in `./vendor/pletfix/auth-plugin/config/routes.php`. 
-You can override or modify the route entries in the application's route file `./config/boot/routes.php` like you wish:
+If you don't use the `manage-user`ability, or if you like to use another route paths, copy the route entries from 
+`./vendor/pletfix/auth-plugin/config/routes.php` into the application's routing file `./config/boot/routes.php`, where 
+you can modify them as you wish:
 
     // Registration Routes
     $route->get('auth/register',          'RegistrationController@showForm');

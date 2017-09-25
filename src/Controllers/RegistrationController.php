@@ -18,13 +18,6 @@ class RegistrationController extends Controller
      */
     protected $redirectTo = '';
 
-//    /**
-//     * Create a new controller instance.
-//     */
-//    public function __construct()
-//    {
-//    }
-
     /**
      * Show the application registration form.
      *
@@ -50,13 +43,13 @@ class RegistrationController extends Controller
         if ($user !== null) {
             return redirect('auth/register')
                 ->withInput($input)
-                ->withError('Diese E-Mail-Adresse ist bereits registriert.', 'email');
+                ->withError(t('auth.register.email_already_used'), 'email');
         }
 
         if ($input['password'] !== $input['password_confirmation']) {
             return redirect('auth/register')
                 ->withInput($input)
-                ->withError('Das Kennwort stimmt nicht überein.', 'password_confirmation');
+                ->withError(t('auth.register.password_not_matched'), 'password_confirmation');
         }
 
         // Create the user account.
@@ -72,7 +65,7 @@ class RegistrationController extends Controller
         $this->sendMail($user);
 
         return redirect($this->redirectTo)
-            ->withMessage('Eine E-Mail wurde zwecks Verifizierung an dich versendet!');
+            ->withMessage(t('auth.register.email_sent'));
     }
 
     /**
@@ -102,7 +95,7 @@ class RegistrationController extends Controller
     protected function sendMail(User $user)
     {
         mailer()
-            ->subject('E-Mail-Adresse verifizieren')
+            ->subject(t('auth.emails.register.subject'))
             ->to($user->email, $user->name)
             ->view('auth.emails.register', compact('user'))
             ->send();
@@ -125,7 +118,7 @@ class RegistrationController extends Controller
 
         $user = User::where('email', $email)->where('confirmation_token', $confirmationToken)->first();
         if ($user === null) {
-            abort(Response::HTTP_FORBIDDEN, 'Token is invalid.');
+            abort(Response::HTTP_FORBIDDEN, t('auth.register.token_invalid'));
         }
 
         // Update the user role from "guest" to "user".
@@ -155,12 +148,12 @@ class RegistrationController extends Controller
 
         if (empty($user->confirmation_token)) {
             return redirect($this->redirectTo)
-                ->withMessage('Die E-Mail-Adresse wurde inzwischen verifiziert.');
+                ->withMessage(t('auth.register.email_already_verified'));
         }
 
         $this->sendMail($user);
 
         return redirect($this->redirectTo)
-            ->withMessage('Eine E-Mail wurde zwecks Verifizierung an dich versendet!');
+            ->withMessage(t('auth.register.email_sent'));
     }
 }

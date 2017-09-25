@@ -40,7 +40,7 @@ class LoginController extends Controller
             unset($input['password']);
             return redirect('auth/login')
                 ->withInput($input)
-                ->withError('E-Mail-Adresse oder Kennwort ist nicht korrekt.');
+                ->withError(t('auth.login.failed'));
         }
 
         $url = session('origin_url', url($this->redirectTo));
@@ -49,7 +49,7 @@ class LoginController extends Controller
     }
 
     /**
-     * Log the user out of the application.
+     * Log off the user from the application.
      *
      * @return Response
      */
