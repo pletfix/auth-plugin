@@ -2,7 +2,7 @@
 
 use Core\Services\Contracts\Router;
 
-$router = Core\Services\DI::getInstance()->get('router');
+$router = Core\Application::router();
 
 // Registration Routes
 $router->get('auth/register',          'RegistrationController@showForm');
