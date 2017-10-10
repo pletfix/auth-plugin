@@ -53,7 +53,7 @@ user management frontend:
 ### Routes
    
 If you don't use the `manage-user`ability, or if you like to use another route paths, copy the route entries from 
-`./vendor/pletfix/auth-plugin/config/routes.php` into the application's routing file `./config/boot/routes.php`, where 
+`./vendor/pletfix/auth-plugin/boot/routes.php` into the application's routing file `./boot/routes.php`, where 
 you can modify them as you wish:
 
     // Registration Routes
