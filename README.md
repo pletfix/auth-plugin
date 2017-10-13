@@ -18,7 +18,7 @@ Fetch the package by running the following terminal command under the applicatio
 
 After downloading, enter this command in your terminal to register the plugin:
 
-    php console plugin pletfix/auth-plugin 
+    php console plugin pletfix/auth-plugin --add-routes
     
 Execute the `migrate` command to create a `password_resets`database table:
  
@@ -35,10 +35,10 @@ and copy the views there. Here you can edit the views as you like:
     cp -R ./vendor/pletfix/auth-plugin/views/* ./resources/views/
      
 If you have installed the [Pletfix Application Skeleton](https://github.com/pletfix/app), you could add the necessary 
-menu items ("login", "logout", "register" and so on) by including the partial `_nav_login` in your  
+menu items ("login", "logout", "register" and so on) by including the partial `_nav` in your 
 `resources/views/app.blade.php` layout just above the marker `{{--menu_point--}}`: 
     
-       @include('_nav_login')
+       @include('auth._nav')
     
 ### Abilities
  
