@@ -2,6 +2,7 @@
     "name": "pletfix/auth-plugin",
     "description": "Authentication Plugin for Pletfix",
     "keywords": ["pletfix", "plugin", "authentication", "user", "manager", "acl"],
+    "license": "MIT",
     "authors": [
         {
             "name": "Frank Rohlfing",
