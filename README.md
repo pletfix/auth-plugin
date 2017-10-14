@@ -18,7 +18,7 @@ Fetch the package by running the following terminal command under the applicatio
 
 After downloading, enter this command in your terminal to register the plugin:
 
-    php console plugin pletfix/auth-plugin --add-routes
+    php console plugin pletfix/auth-plugin
     
 Execute the `migrate` command to create a `password_resets`database table:
  
