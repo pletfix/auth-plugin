@@ -86,6 +86,18 @@ you can modify them as you wish:
         $route->resource('auth/users',             'UserManagerController');
     });
     
+#### Basic Authentication
+
+As an alternative to the default login form you can use HTML Basic Authentication. In this case the action method 
+`LoginController@basicAuth` must be called instead of `LoginController@showForm` if the login route is requested.
+To do this, add the following route entry into `./boot/routes. php`:
+
+    $route->get('auth/login', 'LoginController@basicAuth');
+
+Of course, you can also create a new route so that the previous login form is still accessible: 
+
+    $route->get('auth/basic', 'LoginController@basicAuth');
+        
 ## Usage
 
 ### Registration
@@ -127,7 +139,7 @@ Of course, you could logout by entering this URL:
     https://<your-application>/auth/logout
 
 The `logout` method kill the authentication data and - additional - the "remember-me" cookie if exist.
-
+    
 ### Reset Password
 
 To reset the password, two forms are needed. Enter this to start the reset process:

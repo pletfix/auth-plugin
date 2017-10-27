@@ -57,6 +57,42 @@ class LoginController extends Controller
     {
         auth()->logout();
 
+        if (isset($_SERVER['PHP_AUTH_PW'])) {
+            return response()->output(
+                '<html>You are logout now!<script>window.location.href = "' . url($this->redirectTo) . '"</script></html>',
+                401 // The status code 401 (unauthorized) causes the cached credentials to be cleared by the browser!
+            );
+        }
+
         return redirect($this->redirectTo);
+    }
+
+    /**
+     * Attempt to authenticate using HTTP Basic Authentication.
+     *
+     * @return Response
+     */
+    public function basicAuth()
+    {
+        if (isset($_SERVER['PHP_AUTH_USER']) && isset($_SERVER['PHP_AUTH_PW'])) {
+            $field = config('auth.model.identity');
+            auth()->login([
+                $field     => $_SERVER['PHP_AUTH_USER'],
+                'password' => $_SERVER['PHP_AUTH_PW'],
+            ]);
+        }
+
+        if (!auth()->isLoggedIn()) {
+            // show the HTTP Basic Auth Dialog
+            return response()->output(
+                '<html>Not authorized!<script>window.location.href = "' . url($this->redirectTo) . '"</script></html>', // text to send if user hits Cancel button
+                401,
+                ['WWW-Authenticate' => 'Basic realm="' . config('app.name') . '"']
+            );
+        }
+
+        $url = session('origin_url', url($this->redirectTo));
+
+        return response()->redirect($url);
     }
 }
